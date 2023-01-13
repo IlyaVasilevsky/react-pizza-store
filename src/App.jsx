@@ -7,7 +7,6 @@ import NotFound from './pages/NotFound'
 import './scss/app.scss';
 
 function App() {
-
   return (
     <div className='wrapper'>
       <Header/>
