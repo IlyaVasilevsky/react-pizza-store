@@ -6,12 +6,11 @@
 
   .container {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 640px) {
-      flex-wrap: wrap;
-      justify-content: center;
+    @media (max-width: 962px) {
       .header__cart {
         margin-top: 20px;
       }
