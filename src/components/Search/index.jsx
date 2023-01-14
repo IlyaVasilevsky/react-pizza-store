@@ -1,6 +1,10 @@
+import React from 'react'
 import styles from './Search.module.scss'
+import { SearchContext } from '../../App'
 
-function Search ({ searchValue, setSearchValue }) {
+function Search () {
+    const {searchValue, setSearchValue} = React.useContext(SearchContext)
+
     return (
         <div className={styles.root}>
             <svg className={styles.searchIcon} enableBackground="new 0 0 32 32" id="EditableLine" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
