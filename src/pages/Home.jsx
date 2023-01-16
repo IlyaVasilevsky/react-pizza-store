@@ -5,21 +5,25 @@ import PizzaBlock from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import { useSelector } from "react-redux";
 
 function Home () {
+    const { categoryId , sort } = useSelector(state => state.filter)
+
+
+
+    
     const {searchValue} = React.useContext(SearchContext)
     const [items, setItems] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
-    const [categoryId, setCategoryId] = React.useState(0)
-    const [sortType, setSortType] = React.useState({name: 'популярности', sortProperty: 'rating'})
     const [currentPage, setCurrentPage] = React.useState(1)
 
     React.useEffect(() => {
         setIsLoading(true)
 
         const category = categoryId > 0 ? `category=${categoryId}` : ''
-        const sortBy = sortType.sortProperty.replace('-', '')
-        const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+        const sortBy = sort.sortProperty.replace('-', '')
+        const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
         const search = searchValue ? `&search=${searchValue}` : ''
 
         fetch(`https://63bef57b585bedcb36bbc728.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`)
@@ -31,13 +35,13 @@ function Home () {
             setIsLoading(false)
         })
         window.scrollTo(0, 0)
-    }, [categoryId, sortType, searchValue, currentPage])
+    }, [categoryId, sort, searchValue, currentPage])
 
     return (
         <>
         <div className="content__top">
-            <Categories value={categoryId} onChangeCategory={(i) => setCategoryId(i)}/>
-            <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
+            <Categories />
+            <Sort/>
         </div>
         <h2 className='content__title'>Все пиццы</h2>
         <div className="content__items">
