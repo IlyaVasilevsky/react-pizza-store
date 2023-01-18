@@ -4,15 +4,11 @@ import Sort from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 function Home () {
-    const { categoryId, sort, currentPage } = useSelector(state => state.filter)
-
-
-    const {searchValue} = React.useContext(SearchContext)
+    const { categoryId, sort, currentPage, searchValue } = useSelector(state => state.filter)
     const [items, setItems] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
 
