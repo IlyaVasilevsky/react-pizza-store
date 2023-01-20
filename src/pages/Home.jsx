@@ -5,12 +5,13 @@ import PizzaBlock from '../components/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from "../components/Pagination";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPizza } from "../redux/slices/pizzaSlice";
+import { fetchPizza, selectPizzaData } from "../redux/slices/pizzaSlice";
+import { selectFilter } from "../redux/slices/filterSlice";
 
 function Home () {
     const dispatch = useDispatch()
-    const { categoryId, sort, currentPage, searchValue } = useSelector(state => state.filter)
-    const {items, status} = useSelector(state => state.pizza)
+    const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter)
+    const {items, status} = useSelector(selectPizzaData)
 
     const getPizzas = async () => {
         const category = categoryId > 0 ? `category=${categoryId}` : ''
@@ -33,10 +34,15 @@ function Home () {
         </div>
         <h2 className='content__title'>Все пиццы</h2>
         <div className="content__items">
-            {
-                status === 'loading'
+            {status === 'error' ? (
+                <div className="content__error-info">
+                    <h2>Произошла ошибка 😕</h2>
+                    <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.</p>
+                </div>
+            ) :
+                (status === 'loading'
                 ? [...new Array(10)].map((_, index) => <Skeleton key={index}/>)
-                : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>)
+                : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>))
             }
         </div>
         <Pagination currentPage={currentPage} />
