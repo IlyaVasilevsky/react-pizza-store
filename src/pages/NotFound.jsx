@@ -1,7 +1,7 @@
 import NotFoundBlock from "../components/NotFoundBlock"
 
 function NotFound () {
-    return <NotFoundBlock/>
+  return <NotFoundBlock/>
 }
 
 export default NotFound

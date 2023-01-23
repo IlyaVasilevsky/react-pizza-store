@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import Search from './Search/'
+import Search  from '../components/Search'
 import logoSvg from '../assets/img/pizza-logo.svg'
 import { useSelector } from 'react-redux'
 import { selectCart } from '../redux/slices/cartSlice'

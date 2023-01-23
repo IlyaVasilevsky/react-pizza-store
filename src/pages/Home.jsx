@@ -9,45 +9,45 @@ import { fetchPizza, selectPizzaData } from "../redux/slices/pizzaSlice";
 import { selectFilter } from "../redux/slices/filterSlice";
 
 function Home () {
-    const dispatch = useDispatch()
-    const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter)
-    const {items, status} = useSelector(selectPizzaData)
+  const dispatch = useDispatch()
+  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter)
+  const {items, status} = useSelector(selectPizzaData)
 
-    const getPizzas = async () => {
-        const category = categoryId > 0 ? `category=${categoryId}` : ''
-        const sortBy = sort.sortProperty.replace('-', '')
-        const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
-        const search = searchValue ? `&search=${searchValue}` : ''
-        dispatch(fetchPizza({category, sortBy, order, search, currentPage}))
-    }
+  const getPizzas = async () => {
+    const category = categoryId > 0 ? `category=${categoryId}` : ''
+    const sortBy = sort.sortProperty.replace('-', '')
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
+    const search = searchValue ? `&search=${searchValue}` : ''
+    dispatch(fetchPizza({category, sortBy, order, search, currentPage}))
+  }
 
-    React.useEffect(() => {
-        getPizzas()
-        window.scrollTo(0, 0)
-    }, [categoryId, sort.sortProperty, searchValue, currentPage])
+  React.useEffect(() =>{
+    getPizzas()
+    window.scrollTo(0, 0)
+  }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
-    return (
-        <>
-        <div className="content__top">
-            <Categories/>
-            <Sort/>
-        </div>
-        <h2 className='content__title'>Все пиццы</h2>
-        <div className="content__items">
-            {status === 'error' ? (
-                <div className="content__error-info">
-                    <h2>Произошла ошибка 😕</h2>
-                    <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.</p>
-                </div>
-            ) :
-                (status === 'loading'
-                ? [...new Array(10)].map((_, index) => <Skeleton key={index}/>)
-                : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>))
-            }
-        </div>
-        <Pagination currentPage={currentPage} />
-        </>
-    )
+  return (
+    <>
+    <div className="content__top">
+      <Categories/>
+      <Sort/>
+    </div>
+    <h2 className='content__title'>Все пиццы</h2>
+    <div className="content__items">
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>Произошла ошибка 😕</h2>
+          <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.</p>
+        </div> 
+      ) : 
+        (status === 'loading'
+        ? [...new Array(10)].map((_, index) => <Skeleton key={index}/>)
+        : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>))
+      }
+    </div>
+    <Pagination currentPage={currentPage}/>
+    </>
+  )
 }
 
 export default Home
