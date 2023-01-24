@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPizza, selectPizzaData } from "../redux/slices/pizzaSlice";
 import { selectFilter } from "../redux/slices/filterSlice";
 
-function Home () {
+const Home: React.FC = () => {
   const dispatch = useDispatch()
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter)
   const {items, status} = useSelector(selectPizzaData)
@@ -18,7 +18,8 @@ function Home () {
     const sortBy = sort.sortProperty.replace('-', '')
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const search = searchValue ? `&search=${searchValue}` : ''
-    dispatch(fetchPizza({category, sortBy, order, search, currentPage}))
+    dispatch(// @ts-ignore
+     fetchPizza({category, sortBy, order, search, currentPage}))
   }
 
   React.useEffect(() =>{
@@ -42,7 +43,7 @@ function Home () {
       ) : 
         (status === 'loading'
         ? [...new Array(10)].map((_, index) => <Skeleton key={index}/>)
-        : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>))
+        : items.map((obj: any) => <PizzaBlock key={obj.id} {...obj}/>))
       }
     </div>
     <Pagination currentPage={currentPage}/>
