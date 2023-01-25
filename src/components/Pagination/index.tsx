@@ -7,6 +7,7 @@ import styles from './Pagination.module.scss'
 type PaginationProps = {
   currentPage: number
 }
+
 const Pagination: React.FC<PaginationProps> = ({currentPage}) => {
   const dispatch = useDispatch()
   return (
