@@ -9,6 +9,15 @@ const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart)
   const totalCount = items.reduce((sum: number, item) => sum + item.count, 0)
   const location = useLocation()
+  const isMounted =React.useRef(false)
+
+  React.useEffect(() => {
+    if (isMounted) {
+      const json = JSON.stringify(items)
+      localStorage.setItem('cart', json)
+    }
+    isMounted.current = true
+  }, [items])
 
   return (
     <div className="header">
@@ -22,7 +31,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        <Search/>
+        {location.pathname !== '/cart' && <Search/>}
         {location.pathname !== '/cart' &&
         (<div className="header__cart">
           <Link to='cart' className="button button--cart">
