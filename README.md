@@ -6,4 +6,4 @@
 - **React Router v6**
 - **Axios** 
 
-# [Deploy](https://ilyavasilevsky.github.io/react-pizza-store/)
+### [Deploy](https://ilyavasilevsky.github.io/react-pizza-store/)
